@@ -1,14 +1,15 @@
-import { useEffect } from "react"
+import { useCallback, useEffect } from "react"
 import { useState } from "react"
 
 const useColors = () => {
 	const [colors, setColors] = useState({})
 
-	const setColor = (color) => {
+	const setColor = useCallback((color) => {
 		let { r, g, b } = hexToRgb(color)
+		let invertedColor = getInvertedColor(color)
 
-		setColors({ hex: color, inverted: getInvertedColor(color), rgb: `${r},${g},${b}` })
-	}
+		setColors({ hex: color, inverted: invertedColor, rgb: `${r},${g},${b}` })
+	}, [])
 
 	const getRandomColor = () => {
 		const characters = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
@@ -33,6 +34,12 @@ const useColors = () => {
 	}
 
 	const getInvertedColor = (hex) => {
+		const padZero = (str, len) => {
+			len = len || 2
+			var zeros = new Array(len).join("0")
+			return (zeros + str).slice(-len)
+		}
+
 		if (hex.indexOf("#") === 0) {
 			hex = hex.slice(1)
 		}
@@ -51,15 +58,9 @@ const useColors = () => {
 		return "#" + padZero(r) + padZero(g) + padZero(b)
 	}
 
-	const padZero = (str, len) => {
-		len = len || 2
-		var zeros = new Array(len).join("0")
-		return (zeros + str).slice(-len)
-	}
-
 	useEffect(() => {
 		setColor(getRandomColor())
-	}, [])
+	}, [setColor])
 
 	return { colors, setColor, getRandomColor }
 }
