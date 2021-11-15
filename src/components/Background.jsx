@@ -15,7 +15,7 @@ const Background = () => {
 				rgb({colors.rgb})
 			</Title>
 			<Title colors={colors} textToCopy={colors.inverted}>
-				Inverse: {colors.inverted}
+				Text color: {colors.inverted}
 			</Title>
 
 			<GenerateButton colors={colors} setColor={setColor} getRandomColor={getRandomColor} />
