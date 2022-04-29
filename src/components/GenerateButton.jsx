@@ -21,7 +21,7 @@ const StyledButton = styled.button`
 	color: ${(props) => props.color};
 	cursor: pointer;
 	font-weight: bold;
-	font-size: clamp(20px, 3vw, 50px);
+	font-size: clamp(15px, 3vw, 30px);
 	padding: 0.5em 0.75em;
 	letter-spacing: 2px;
 	transition: all 0.3s;
