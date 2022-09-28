@@ -6,7 +6,7 @@ import { ColorType } from '@/types/ColorType';
 // Initializing the cors middleware
 // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
 const cors = Cors({
-  methods: ['POST', 'GET', 'HEAD'],
+  methods: ['GET'],
 });
 
 const getRandomHexColor = () => {
@@ -92,18 +92,23 @@ function runMiddleware(req: NextApiRequest, res: NextApiResponse, fn: any) {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ColorType>,
+  res: NextApiResponse,
 ) {
-  // Run the middleware
-  await runMiddleware(req, res, cors);
+  try {
+    // Run the middleware
+    await runMiddleware(req, res, cors);
 
-  const color = getRandomHexColor();
-  const invertedColor = getInvertedColor(color);
-  const { r, g, b } = hexToRgb(color);
+    const color = getRandomHexColor();
+    const invertedColor = getInvertedColor(color);
+    const { r, g, b } = hexToRgb(color);
+    const data = {
+      normal: color,
+      inverted: invertedColor,
+      rgb: `${r}, ${g}, ${b}`,
+    };
 
-  res.status(200).json({
-    normal: color,
-    inverted: invertedColor,
-    rgb: `${r}, ${g}, ${b}`,
-  });
+    res.status(200).send(data);
+  } catch (err) {
+    res.status(500).send({ error: 'failed to load data' });
+  }
 }
