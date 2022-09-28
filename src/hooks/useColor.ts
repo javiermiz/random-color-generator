@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ColorType } from '@/types/ColorType';
+import { fetchColor } from '@/services/colorService';
 
 const defaultColor = {
   normal: '#ffffff',
@@ -7,18 +8,15 @@ const defaultColor = {
   rgb: '255,255,255',
 };
 
-const API_ROUTE = '/api';
-
 const useColor = () => {
   const [color, setColors] = useState<ColorType>(defaultColor);
 
   useEffect(() => {
     const getColor = async () => {
       try {
-        const response = await fetch(API_ROUTE + '/color');
-        const data: ColorType = await response.json();
+        const colorData = await fetchColor();
 
-        setColors(data);
+        setColors(colorData);
       } catch (e) {
         console.log(e);
       }
