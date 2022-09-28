@@ -7,13 +7,15 @@ const defaultColor = {
   rgb: '255,255,255',
 };
 
+const API_ROUTE = '/api';
+
 const useColor = () => {
   const [color, setColors] = useState<ColorType>(defaultColor);
 
   useEffect(() => {
     const getColor = async () => {
       try {
-        const response = await fetch('/api/colors');
+        const response = await fetch(API_ROUTE + '/color');
         const data: ColorType = await response.json();
 
         setColors(data);
