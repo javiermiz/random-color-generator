@@ -1,0 +1,12 @@
+:root {
+  /* Colors, c is for 'color' */
+  --c-light: #ffffff;
+  --c-dark: #000000;
+  --c-primary: #00036E;
+  --c-primary-light: #1B139E;
+  --c-secondary: #FDB107;
+
+  /* Fonts, f is for Font family */
+  --f-primary: 'BioRhyme';
+  --f-secondary: 'Montserrat';
+}
